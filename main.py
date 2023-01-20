@@ -126,37 +126,31 @@ def wings():
 def policeLights():
     while True:
         strip.brightness(255)
-        for i in range(20):
-            showColor = bool(random.getrandbits(1))
-            if showColor:
-                strip.fill(black)
-                strip.set_pixel_line(0, 15, blue)
-                strip.set_pixel_line(30, 45, blue)
-                strip.set_pixel_line(60, 75, blue)
-                strip.set_pixel_line(90, 99, blue)
-                strip.show()
-            else:
-                strip.fill(black)
-                strip.show()
-        for i in range(20):
-            showColor = bool(random.getrandbits(1))
-            if showColor:
-                strip.fill(black)
-                strip.set_pixel_line(16, 29, red)
-                strip.set_pixel_line(46, 59, red)
-                strip.set_pixel_line(76, 89, red)
-                strip.show()
-            else:
-                strip.fill(black)
-                strip.show()
+        for i in range(6):
+            strip.fill(black)
+            strip.show()
+            time.sleep(.05)
+            strip.set_pixel_line(0, 15, blue)
+            strip.set_pixel_line(30, 45, blue)
+            strip.set_pixel_line(60, 75, blue)
+            strip.set_pixel_line(90, 99, blue)
+            strip.show()
+            time.sleep(.05)
+        for i in range(6):
+            strip.fill(black)
+            strip.show()
+            time.sleep(.05)
+            strip.set_pixel_line(16, 29, red)
+            strip.set_pixel_line(46, 59, red)
+            strip.set_pixel_line(76, 89, red)
+            strip.show()
+            time.sleep(.05)
 
 while True:
     cur_value = button.value()
-    if button_count % (num_colors + 5) < num_colors:
-        set_color()
-    sleep_ms(10)
+
     if last_value > cur_value:
-        print("You released the button!")
+        # Button released
         button_count = button_count + 1
         if button_count % (num_colors+5) == num_colors:
             gradient()
@@ -170,7 +164,7 @@ while True:
             fade()
         else:
             set_color()
-    if cur_value == 1:
+    if cur_value == 1 and last_value != 1:
         last_value = 1
-    if cur_value == 0:
+    elif cur_value == 0 and last_value != 0:
         last_value = 0
