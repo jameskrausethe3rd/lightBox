@@ -99,14 +99,18 @@ def fade():
     while True:
         strip.fill(red)
         for x in range(0, 255):
-            if button.value() ==1:
+            if button.value() == 1:
                 return
             strip.fill((255-x, 0+x, 0))
             strip.show()
         for x in range(0, 255):
+            if button.value() == 1:
+                return
             strip.fill((0, 255-x, 0+x))
             strip.show()
         for x in range(0, 255):
+            if button.value() == 1:
+                return
             strip.fill((0+x, 0, 255-x))
             strip.show()
 
@@ -146,25 +150,31 @@ def policeLights():
             strip.show()
             time.sleep(.05)
 
-while True:
-    cur_value = button.value()
+def main():
+    while True:
+        global last_value
+        global button_count
+        cur_value = button.value()
 
-    if last_value > cur_value:
-        # Button released
-        button_count = button_count + 1
-        if button_count % (num_colors+5) == num_colors:
-            gradient()
-        elif button_count % (num_colors+5) == num_colors+1:
-            fastFill()
-        elif button_count % (num_colors+5) == num_colors+2:
-            bottomUp()
-        elif button_count % (num_colors+5) == num_colors+3:
-            candle()
-        elif button_count % (num_colors+5) == num_colors+4:
-            fade()
-        else:
-            set_color()
-    if cur_value == 1 and last_value != 1:
-        last_value = 1
-    elif cur_value == 0 and last_value != 0:
-        last_value = 0
+        if last_value > cur_value:
+            # Button released
+            button_count = button_count + 1
+            if button_count % (num_colors+5) == num_colors:
+                gradient()
+            elif button_count % (num_colors+5) == num_colors+1:
+                fastFill()
+            elif button_count % (num_colors+5) == num_colors+2:
+                bottomUp()
+            elif button_count % (num_colors+5) == num_colors+3:
+                candle()
+            elif button_count % (num_colors+5) == num_colors+4:
+                fade()
+            else:
+                set_color()
+        if cur_value == 1 and last_value != 1:
+            last_value = 1
+        elif cur_value == 0 and last_value != 0:
+            last_value = 0
+
+if __name__ == "__main__":
+    main()
